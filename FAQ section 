@@ -1,0 +1,76 @@
+import Head from 'next/head';
+import { useRef, useState, useEffect } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+
+const faqs = [
+  { question: "How do I recover my Binance Wallet?", answer: "Use your original 12- or 24-word seed phrase to restore your wallet in the Binance Wallet extension." },
+  { question: "I lost my seed phrase. Can I still access my wallet?", answer: "Unfortunately, without the seed phrase, wallet recovery is not possible due to the security model of Web3 wallets." },
+  { question: "Is my wallet password the same as my Binance account?", answer: "No. Your Binance Wallet password is separate from your Binance.com account credentials." },
+  { question: "How do I reset my Binance Wallet password?", answer: "You must restore your wallet using your seed phrase and set a new password during the process." },
+  { question: "How can I check if a DApp is safe to connect with?", answer: "Only use well-known and audited DApps. Double-check URLs and avoid clicking links from unknown sources." },
+  { question: "Can Binance help me recover stolen funds?", answer: "No. Binance does not have access to wallet keys or transactions on decentralized platforms." },
+  { question: "Why is my wallet balance not showing correctly?", answer: "Try switching networks or refreshing the wallet. Sometimes it takes time to sync with the blockchain." },
+  { question: "What should I do if I approved a malicious DApp?", answer: "Immediately revoke DApp permissions and transfer funds to a new wallet address." },
+  { question: "How can I keep my wallet secure?", answer: "Use hardware wallets, avoid storing seed phrases digitally, and enable 2FA on all connected accounts." }
+];
+
+function FaqItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (open && ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [open]);
+
+  return (
+    <div className="border-b py-4 cursor-pointer" ref={ref}>
+      <div className="flex justify-between items-center" onClick={() => setOpen(!open)}>
+        <h3 className="font-medium">{question}</h3>
+        {open ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+      </div>
+      {open && <p className="mt-2 text-gray-700">{answer}</p>}
+    </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <div className="min-h-screen bg-white text-gray-800">
+      <Head>
+        <title>Binance Wallet Support Center | Recovery & Security</title>
+        <meta name="description" content="Independent Binance Web3 Wallet help center. Find recovery tips, security practices, and FAQs." />
+        <meta name="keywords" content="Binance Wallet, Crypto Wallet Support, Wallet Recovery, Binance FAQ, DApp Safety" />
+        <meta name="author" content="Binance Wallet Support Center" />
+      </Head>
+
+      <main className="max-w-4xl mx-auto px-6 py-12">
+        <h1 className="text-4xl font-bold mb-4">🛡️ Binance Wallet Support Center</h1>
+        <p className="mb-6">
+          Welcome to the <strong>Binance Wallet Support Center</strong> — an independent platform offering help with the <strong>Binance Web3 Wallet</strong>.
+          Get step-by-step <em>wallet recovery instructions</em>, <em>security tips</em>, and <em>frequently asked questions</em> below.
+        </p>
+
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-10">
+          <strong>Disclaimer:</strong> This site is <strong>not affiliated with Binance.com</strong>. All content is for educational use only.
+        </div>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold mb-4">🛠️ Key Features</h2>
+          <ul className="list-disc list-inside space-y-1">
+            <li>🔑 Wallet Recovery Guide</li>
+            <li>🛡️ Security Best Practices</li>
+            <li>❓ FAQ Section with Common Issues</li>
+            <li>📱 Mobile-Friendly & Fast</li>
+          </ul>
+        </section>
+
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4">❓ Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, i) => (
+              <FaqItem key={i} question={faq.question} answer={faq.answer} />
+            ))}
+          </div>
+        
